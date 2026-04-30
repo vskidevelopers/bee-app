@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 'use client';
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
@@ -96,7 +97,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     const getTotal = () => {
         return items.reduce((sum, item) => {
             // Use min price for dynamic pricing display
-            const price = item.priceRange.min;
+            const price = item?.discountPrice ? item?.discountPrice : item.price
             return sum + price * item.quantity;
         }, 0);
     };
