@@ -1,65 +1,91 @@
-import Image from "next/image";
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import { ArrowRight, ShoppingBag, MessageCircle, ShieldCheck, Truck, Star } from 'lucide-react';
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: 'Home - Smart Home & Decor Nairobi',
+  description: 'Transform your space with premium smart home gadgets, warm duvets, mosquito nets, and modern decor. Nairobi delivery & M-Pesa accepted.',
+  keywords: ['smart home gadgets Nairobi', 'warm duvets Kenya', 'mosquito nets delivery Nairobi', 'home decor Moi Avenue', 'BeeHouseholds'],
+};
+
+const categories = [
+  { id: 'duvets', name: 'Warm Duvets', icon: '🛏️' },
+  { id: 'nets', name: 'Mosquito Nets', icon: '🦟' },
+  { id: 'smart', name: 'Smart Gadgets', icon: '📱' },
+  { id: 'furniture', name: 'Bedside & Furniture', icon: '🪑' },
+  { id: 'carpets', name: 'Carpets & Rugs', icon: '🧶' },
+  { id: 'dinner', name: 'Dinner Sets', icon: '🍽️' },
+];
+
+export default function HomePage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <div className="flex flex-col">
+      {/* Hero Section */}
+      <section className="relative bg-linear-to-br from-amber-50 via-stone-50 to-orange-50 py-20 px-4">
+        <div className="container mx-auto max-w-5xl text-center">
+          <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-stone-900 mb-6">
+            Transform Your Space with <span className="text-amber-700">Smart Home Solutions</span> & Premium Decor
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="text-lg md:text-xl text-stone-600 mb-8 max-w-3xl mx-auto">
+            Nairobi&apos;s trusted destination for warm duvets, mosquito nets, bedside essentials, and modern home accessories. Making your home smarter, warmer, and safer.
           </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/shop" className="inline-flex items-center justify-center px-8 py-3 text-base font-medium text-white bg-amber-700 hover:bg-amber-800 rounded-md transition shadow-md">
+              Shop Collection <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
+            <a href="https://wa.me/254720151058?text=Hi%20BeeHouseholds%2C%20I%27d%20like%20a%20quote%20for..." target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center px-8 py-3 text-base font-medium text-amber-700 bg-white border-2 border-amber-700 hover:bg-amber-50 rounded-md transition">
+              <MessageCircle className="mr-2 h-5 w-5" /> WhatsApp Us for a Quote
+            </a>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* Trust Badges */}
+      <section className="bg-white border-y border-stone-200 py-8">
+        <div className="container mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+          {[
+            { icon: <Star className="h-6 w-6 text-amber-600" />, title: "133K+ Happy Customers", desc: "Loved on TikTok & Beyond" },
+            { icon: <Truck className="h-6 w-6 text-amber-600" />, title: "Countrywide Delivery", desc: "Fast & Secure Shipping" },
+            { icon: <ShieldCheck className="h-6 w-6 text-amber-600" />, title: "Quality Guarantee", desc: "Premium Home Essentials" },
+            { icon: <ShoppingBag className="h-6 w-6 text-amber-600" />, title: "Easy Payment", desc: "M-Pesa Accepted" },
+          ].map((badge, i) => (
+            <div key={i} className="flex flex-col items-center gap-2">
+              <div className="p-3 bg-amber-50 rounded-full">{badge.icon}</div>
+              <h3 className="font-semibold text-stone-900">{badge.title}</h3>
+              <p className="text-sm text-stone-500">{badge.desc}</p>
+            </div>
+          ))}
         </div>
-      </main>
+      </section>
+
+      {/* Featured Categories */}
+      <section className="py-16 px-4 bg-stone-50">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-bold text-stone-900">Shop by Category</h2>
+            <p className="text-stone-600 mt-2">Explore our curated collection for every room</p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            {categories.map((cat) => (
+              <Link key={cat.id} href={`/shop?category=${cat.id}`} className="group flex flex-col items-center p-6 bg-white rounded-xl shadow-sm border border-stone-200 hover:border-amber-300 hover:shadow-md transition">
+                <span className="text-4xl mb-3 group-hover:scale-110 transition-transform">{cat.icon}</span>
+                <span className="font-medium text-stone-800 text-center">{cat.name}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* TikTok Social Proof Placeholder */}
+      <section className="py-16 px-4 bg-gradient-to-r from-stone-900 to-stone-800 text-white">
+        <div className="container mx-auto max-w-4xl text-center">
+          <h2 className="text-2xl md:text-3xl font-bold mb-4">Join Our Community of 133K+ Followers</h2>
+          <p className="text-stone-300 mb-6 max-w-2xl mx-auto">See our latest setups, customer reviews, and exclusive deals on TikTok @bee_households260</p>
+          <div className="w-full h-64 bg-stone-800 rounded-lg flex items-center justify-center border-2 border-dashed border-stone-600 text-stone-400">
+            TikTok Feed / Video Embed Placeholder
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
