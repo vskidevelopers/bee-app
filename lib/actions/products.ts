@@ -185,3 +185,143 @@ export async function getAllProducts(query?: string): Promise<Product[]> {
     return [];
   }
 }
+
+export async function getPublicProducts({
+  category,
+  minPrice,
+  maxPrice,
+  search,
+  page = 1,
+  limit = 12,
+}: {
+  category?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  search?: string;
+  page?: number;
+  limit?: number;
+}): Promise<{ products: Product[]; total: number; hasMore: boolean }> {
+  try {
+    console.info("[ProductsAction] Fetching public products", {
+      category,
+      priceRange: { minPrice, maxPrice },
+      search,
+      page,
+    });
+
+    // ✅ Start with base query — NO stock filter
+    let query: FirebaseFirestore.Query<FirebaseFirestore.DocumentData> =
+      adminDb.collection("products");
+
+    // Category filter
+    if (category && category !== "all") {
+      query = query.where("category", "==", category);
+    }
+
+    // Price filters
+    if (minPrice !== undefined) {
+      query = query.where("price", ">=", minPrice);
+    }
+    if (maxPrice !== undefined) {
+      query = query.where("price", "<=", maxPrice);
+    }
+
+    // Sort by newest first
+    query = query.orderBy("createdAt", "desc");
+
+    const snapshot = await query.get();
+
+    // Map to Product type with serialization
+    let products = snapshot.docs.map((doc) => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        ...data,
+        createdAt:
+          data.createdAt?.toDate?.().toISOString() || new Date().toISOString(),
+        updatedAt:
+          data.updatedAt?.toDate?.().toISOString() || new Date().toISOString(),
+        discountPrice: data.discountPrice || undefined,
+      } as Product;
+    });
+
+    // Client-side search (simple, fine for <1000 products)
+    if (search) {
+      const q = search.toLowerCase();
+      products = products.filter(
+        (p) =>
+          p.name.toLowerCase().includes(q) ||
+          p.shortDescription?.toLowerCase().includes(q) ||
+          p.category.toLowerCase().includes(q),
+      );
+    }
+
+    // Pagination
+    const total = products.length;
+    const start = (page - 1) * limit;
+    const paginated = products.slice(start, start + limit);
+
+    return {
+      products: paginated,
+      total,
+      hasMore: start + limit < total,
+    };
+  } catch (error) {
+    console.error("[ProductsAction] Failed to fetch public products", error);
+    return { products: [], total: 0, hasMore: false };
+  }
+}
+
+export async function getPublicProduct(slug: string): Promise<Product | null> {
+  try {
+    console.info("[ProductsAction] Fetching public product", { slug });
+
+    // Query by slug only — no stock filter
+    const snapshot = await adminDb
+      .collection("products")
+      .where("slug", "==", slug)
+      .limit(1)
+      .get();
+
+    if (snapshot.empty) return null;
+
+    const doc = snapshot.docs[0];
+    const data = doc.data();
+
+    return {
+      id: doc.id,
+      ...data,
+      createdAt:
+        data.createdAt?.toDate?.().toISOString() || new Date().toISOString(),
+      updatedAt:
+        data.updatedAt?.toDate?.().toISOString() || new Date().toISOString(),
+      discountPrice: data.discountPrice || undefined,
+    } as Product;
+  } catch (error) {
+    console.error("[ProductsAction] Failed to fetch public product", {
+      slug,
+      error,
+    });
+    return null;
+  }
+}
+
+export async function getProductCategories(): Promise<string[]> {
+  try {
+    const snapshot = await adminDb
+      .collection("products")
+      .select("category")
+      .get();
+
+    const categories = new Set<string>();
+    snapshot.docs.forEach((doc) => {
+      const cat = doc.data().category;
+      if (cat) categories.add(cat);
+    });
+
+    return Array.from(categories).sort();
+  } catch (error) {
+    console.error("[ProductsAction] Failed to fetch categories", error);
+    return [];
+  }
+}

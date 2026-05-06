@@ -10,6 +10,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/co
 import { Logo } from './Logo';
 import { cn } from '@/lib/utils';
 
+
 const navLinks = [
     { href: '/shop', label: 'Shop' },
     { href: '/about', label: 'About' },
@@ -19,9 +20,10 @@ const navLinks = [
 
 export function Navbar() {
     const pathname = usePathname();
-    const { getItemCount } = useCart();
+    const { itemCount } = useCart();
     const [mobileOpen, setMobileOpen] = useState(false);
-    const itemCount = getItemCount();
+
+
 
     const whatsappNumber = '254720151058';
     const whatsappMessage = encodeURIComponent(
@@ -131,15 +133,14 @@ export function Navbar() {
                                         Chat on WhatsApp
                                     </a>
                                 </Button>
-                                <Button
-                                    variant="outline"
-                                    asChild
-                                    className="w-full border-brand-gold text-brand-gold hover:bg-yellow-50"
-                                    onClick={() => setMobileOpen(false)}
-                                >
+                                <Button variant="ghost" size="icon" asChild className="relative hover:bg-stone-100">
                                     <Link href="/cart">
-                                        <ShoppingBag className="h-4 w-4 mr-2" />
-                                        Cart ({itemCount})
+                                        <ShoppingBag className="h-5 w-5 text-brand-dark" />
+                                        {itemCount > 0 && (
+                                            <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-brand-gold text-[10px] font-bold text-white animate-pulse-once">
+                                                {itemCount}
+                                            </span>
+                                        )}
                                     </Link>
                                 </Button>
                             </div>

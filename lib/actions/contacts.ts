@@ -6,17 +6,35 @@ import { ContactInquiry } from "@/types";
 
 export async function createContactInquiry(
   data: Omit<ContactInquiry, "id" | "createdAt" | "updatedAt" | "status">,
-) {
+): Promise<{ success: boolean; id: string }> {
   console.info("[ContactsAction] Creating inquiry", {
     phone: data.phone,
     subject: data.subject,
+    source: data.source || "contact-page",
   });
 
-  const docRef = await adminDb.collection("contacts").add({
-    ...data,
-    status: "new",
+  // Format phone to E.164
+  const phone = data.phone.startsWith("254")
+    ? data.phone
+    : `254${data.phone.replace(/^0/, "")}`;
+
+  const inquiryData = {
+    name: data.name.trim(),
+    phone,
+    email: data.email?.trim() || null,
+    subject: data.subject.trim(),
+    message: data.message.trim(),
+    source: data.source || "contact-page",
+    status: "new" as const,
     createdAt: FieldValue.serverTimestamp(),
     updatedAt: FieldValue.serverTimestamp(),
+  };
+
+  const docRef = await adminDb.collection("contacts").add(inquiryData);
+
+  console.info("[ContactsAction] Inquiry created", {
+    id: docRef.id,
+    phone,
   });
 
   return { success: true, id: docRef.id };

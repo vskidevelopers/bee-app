@@ -65,7 +65,7 @@ export default function LoginPage() {
                     </div>
                     <Button
                         type="submit"
-                        className="w-full border border-[#b88a35] bg-brand-gold hover:bg-[#b88a35] text-[#b88a35] hover:text-white"
+                        className="w-full border border-[#b88a35] bg-brand-gold hover:bg-[#b88a35] hover:text-white"
                         disabled={loading}
                     >
                         {loading ? 'Signing in...' : 'Sign In'}

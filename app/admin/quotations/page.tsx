@@ -2,9 +2,9 @@ import { getAllQuotations, updateQuotationStatus } from '@/lib/actions/quotation
 import { Quotation } from '@/types';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Phone, Mail, } from 'lucide-react';
+import { Phone, Mail } from 'lucide-react';
 import { QuotationsFilter } from '@/components/admin/QuotationsFilter';
+import { QuotationStatusSelector } from '@/components/admin/QuotationStatusSelector'; // ✅ Import
 
 export const dynamic = 'force-dynamic';
 
@@ -31,20 +31,13 @@ export default async function AdminQuotationsPage({
 
     return (
         <div className="space-y-6">
+            {/* ✅ Clean header - no duplication */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
                     <h1 className="text-2xl font-bold text-brand-dark">Quotation Requests</h1>
                     <p className="text-brand-grey text-sm mt-1">{quotations.length} requests</p>
                 </div>
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div>
-                        <h1 className="text-2xl font-bold text-brand-dark">Quotation Requests</h1>
-                        <p className="text-brand-grey text-sm mt-1">{quotations.length} requests</p>
-                    </div>
-
-                    {/* ✅ Client Component replaces inline Select */}
-                    <QuotationsFilter defaultStatus={status} />
-                </div>
+                <QuotationsFilter defaultStatus={status} />
             </div>
 
             <div className="border border-stone-200 rounded-lg overflow-hidden">
@@ -95,20 +88,11 @@ export default async function AdminQuotationsPage({
                                         {new Date(q.createdAt).toLocaleDateString('en-KE')}
                                     </TableCell>
                                     <TableCell className="text-right">
-                                        <Select
-                                            defaultValue={q.status}
-                                            onValueChange={(val) => updateQuotationStatus(q.id, val as Quotation['status'])}
-                                        >
-                                            <SelectTrigger className="w-[130px] h-8 text-xs">
-                                                <SelectValue />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                <SelectItem value="new">New</SelectItem>
-                                                <SelectItem value="contacted">Contacted</SelectItem>
-                                                <SelectItem value="quoted">Quoted</SelectItem>
-                                                <SelectItem value="closed">Closed</SelectItem>
-                                            </SelectContent>
-                                        </Select>
+                                        {/* ✅ Client Component replaces inline Select */}
+                                        <QuotationStatusSelector
+                                            quotationId={q.id}
+                                            defaultStatus={q.status}
+                                        />
                                     </TableCell>
                                 </TableRow>
                             ))

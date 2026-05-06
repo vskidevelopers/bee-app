@@ -59,8 +59,9 @@ export interface Customer {
   phone: string;
   email?: string;
   orders: string[]; // Order IDs
-  createdAt: string;
-  lastOrderAt?: string;
+  createdAt: string; // ISO string
+  updatedAt?: string; // ✅ Add this (ISO string, optional)
+  lastOrderAt?: string; // ISO string, optional
   notes?: string;
 }
 

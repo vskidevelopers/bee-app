@@ -16,8 +16,8 @@ interface CartContextType {
     removeItem: (productId: string) => void;
     updateQuantity: (productId: string, quantity: number) => void;
     clearCart: () => void;
-    getTotal: () => number;
-    getItemCount: () => number;
+    itemCount: number;
+    subtotal: number;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -94,28 +94,20 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         logger.info('Cart', 'Cart cleared');
     };
 
-    const getTotal = () => {
-        return items.reduce((sum, item) => {
-            // Use min price for dynamic pricing display
-            const price = item?.discountPrice ? item?.discountPrice : item.price
-            return sum + price * item.quantity;
-        }, 0);
-    };
 
-    const getItemCount = () => {
-        return items.reduce((count, item) => count + item.quantity, 0);
-    };
+    const itemCount = items.reduce((count, item) => count + item.quantity, 0);
+    const subtotal = items.reduce((sum, item) => sum + (item.discountPrice ?? item.price) * item.quantity, 0);
 
     return (
         <CartContext.Provider
             value={{
                 items,
+                itemCount,
                 addItem,
                 removeItem,
                 updateQuantity,
                 clearCart,
-                getTotal,
-                getItemCount,
+                subtotal,
             }}
         >
             {children}
