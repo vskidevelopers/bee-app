@@ -1,6 +1,8 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
+import { Customer } from "@/types";
+
 /**
  * CN Helper: Merge Tailwind classes with conditional logic
  * Shadcn UI standard pattern
@@ -66,3 +68,38 @@ export const logger = {
     // TODO: Integrate with error tracking service (Sentry, etc.) in production
   },
 };
+
+const toIsoString = (value: any): string | undefined => {
+  if (!value) return undefined;
+  // Handle Firestore Timestamp
+  if (typeof value.toDate === "function") {
+    return value.toDate().toISOString();
+  }
+  // Handle already-ISO string
+  if (typeof value === "string") {
+    return value;
+  }
+  // Handle Date object
+  if (value instanceof Date) {
+    return value.toISOString();
+  }
+  // Fallback
+  return undefined;
+};
+
+export function assertCustomer(data: any): Customer {
+  if (!data?.name || !data?.phone) {
+    throw new Error("Invalid customer data");
+  }
+  return {
+    id: data.id,
+    name: data.name,
+    phone: data.phone,
+    email: data.email || undefined,
+    orders: Array.isArray(data.orders) ? data.orders : [],
+    createdAt: toIsoString(data.createdAt) || new Date().toISOString(),
+    updatedAt: toIsoString(data.updatedAt),
+    lastOrderAt: toIsoString(data.lastOrderAt),
+    notes: data.notes || undefined,
+  };
+}

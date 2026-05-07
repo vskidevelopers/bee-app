@@ -64,7 +64,7 @@ export async function getOrder(id: string): Promise<Order | null> {
     const doc = await adminDb.collection("orders").doc(id).get();
     if (!doc.exists) return null;
 
-    const data = doc.data();
+    const data = doc.data()!;
     return {
       id: doc.id,
       ...data,

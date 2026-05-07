@@ -3,6 +3,7 @@
 import { adminDb } from "@/lib/firebase-admin";
 import { FieldValue } from "firebase-admin/firestore";
 import { Customer, Order } from "@/types";
+import { assertCustomer } from "../utils";
 
 // ✅ Helper: Safely serialize Firestore Timestamp to ISO string
 const toIsoString = (value: any): string | undefined => {
@@ -81,17 +82,8 @@ export async function getCustomerWithOrders(
     // Fetch customer
     const customerDoc = await adminDb.collection("customers").doc(id).get();
     if (!customerDoc.exists) return { customer: null, orders: [] };
-
     const customerData = customerDoc.data();
-    const customer: Customer = {
-      id: customerDoc.id,
-      ...customerData,
-      createdAt:
-        toIsoString(customerData.createdAt) || new Date().toISOString(),
-      updatedAt:
-        toIsoString(customerData.updatedAt) || new Date().toISOString(),
-      lastOrderAt: toIsoString(customerData.lastOrderAt),
-    };
+    const customer = assertCustomer(customerData);
 
     // Fetch orders for this customer (by phone match)
     const ordersSnap = await adminDb
