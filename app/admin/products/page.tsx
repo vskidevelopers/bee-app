@@ -33,7 +33,7 @@ export default async function AdminProductsPage({
 
                 <Button
                     asChild
-                    className="bg-brand-gold border border-[#b88a35] hover:bg-[#b88a35] text-[#b88a35] hover:text-white font-semibold shadow-md hover:shadow-lg transition-all shrink-0"
+                    className="bg-brand-gold border border-[#b88a35] hover:bg-[#b88a35] hover:text-white font-semibold shadow-md hover:shadow-lg transition-all shrink-0"
                 >
                     <Link href="/admin/products/new">
                         <Plus className="h-4 w-4 mr-2" />

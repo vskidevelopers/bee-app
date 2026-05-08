@@ -451,7 +451,7 @@ export function ProductForm({ product, onSubmit, submitLabel }: ProductFormProps
             <div className="flex gap-3 pt-6 border-t border-stone-200">
                 <Button
                     type="submit"
-                    className="bg-brand-gold border-[#b88a35] hover:bg-[#b88a35] text-[#b88a35] hover:text-white font-medium border-2 border-brand-gold hover:border-[#b88a35] transition-all min-w-[140px]"
+                    className="bg-brand-gold border-[#b88a35] hover:bg-[#b88a35] text-white font-medium border-2 border-brand-gold hover:border-[#b88a35] transition-all min-w-[140px]"
                     disabled={loading}
                 >
                     {loading ? (

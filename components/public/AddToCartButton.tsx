@@ -27,7 +27,7 @@ export function AddToCartButton({ product }: AddToCartButtonProps) {
     return (
         <Button
             onClick={handleClick}
-            className="bg-brand-gold border border-[#b88a35] text-[#b88a35] hover:bg-[#b88a35] hover:text-white font-medium min-w-[180px]"
+            className="bg-brand-gold border border-[#b88a35] hover:bg-[#b88a35] hover:text-white font-medium min-w-[180px]"
         >
             <ShoppingCart className="h-4 w-4 mr-2" />
             Add to Cart

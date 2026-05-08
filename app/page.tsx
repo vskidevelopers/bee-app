@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowRight, ShoppingBag, MessageCircle, ShieldCheck, Truck, Star } from 'lucide-react';
+import { TikTokFeed } from '@/components/public/TikTokFeed';
 
 export const metadata: Metadata = {
   title: 'Home - Smart Home & Decor Nairobi',
@@ -78,11 +79,40 @@ export default function HomePage() {
 
       {/* TikTok Social Proof Placeholder */}
       <section className="py-16 px-4 bg-gradient-to-r from-stone-900 to-stone-800 text-white">
-        <div className="container mx-auto max-w-4xl text-center">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">Join Our Community of 133K+ Followers</h2>
-          <p className="text-stone-300 mb-6 max-w-2xl mx-auto">See our latest setups, customer reviews, and exclusive deals on TikTok @bee_households260</p>
-          <div className="w-full h-64 bg-stone-800 rounded-lg flex items-center justify-center border-2 border-dashed border-stone-600 text-stone-400">
-            TikTok Feed / Video Embed Placeholder
+        <div className="container mx-auto max-w-6xl text-center">
+          <h2 className="text-2xl md:text-3xl font-bold mb-4">
+            Join Our Community of 133K+ Followers
+          </h2>
+          <p className="text-stone-300 mb-8 max-w-2xl mx-auto">
+            See our latest setups, customer reviews, and exclusive deals on TikTok{' '}
+            <a
+              href="https://tiktok.com/@bee_households260"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-brand-gold hover:underline font-medium"
+            >
+              @bee_households260
+            </a>
+          </p>
+
+          {/* TikTok Feed */}
+          <div className="mb-8">
+            <TikTokFeed />
+          </div>
+
+          {/* Follow Button */}
+          <div>
+            <a
+              href="https://www.tiktok.com/@bee_households260"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-black rounded-lg hover:bg-stone-800 transition border border-stone-700"
+            >
+              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
+              </svg>
+              Follow @bee_households260 on TikTok
+            </a>
           </div>
         </div>
       </section>
