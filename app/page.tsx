@@ -83,7 +83,8 @@ export default function HomePage() {
           <h2 className="text-2xl md:text-3xl font-bold mb-4">
             Join Our Community of 133K+ Followers
           </h2>
-          <p className="text-stone-300 mb-8 max-w-2xl mx-auto">
+          <p className
+            ="text-stone-300 mb-8 max-w-2xl mx-auto">
             See our latest setups, customer reviews, and exclusive deals on TikTok{' '}
             <a
               href="https://tiktok.com/@bee_households260"
@@ -97,10 +98,7 @@ export default function HomePage() {
 
           {/* TikTok Feed with fallback */}
           <div className="mb-8">
-            <TikTokFeed
-              onLoaded={() => console.info('[TikTokFeed] Loaded successfully')}
-              onError={() => console.warn('[TikTokFeed] Failed to load')}
-            />
+            <TikTokFeed />
           </div>
 
           {/* Follow Button */}
