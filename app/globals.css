@@ -207,3 +207,31 @@
 .animate-pulse-once:hover {
   animation: none;
 }
+
+/* =========================================
+   Elfsight TikTok Feed - Hide Watermark
+   (For development/testing only)
+   ========================================= */
+
+/* Target the watermark link by href attribute */
+a[href*="elfsight.com/tiktok-feed-widget"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Also hide any wrapper divs that might contain it */
+.elfsight-app-65c4ad60-d1f6-49f1-96f4-83faf5bd5003
+  [style*="background-color: rgba(238, 238, 238"] {
+  display: none !important;
+}
+
+/* Fallback: Hide by text content (less reliable) */
+a:has(svg path[d*="M8.28439 0.619913"]) {
+  display: none !important;
+}
