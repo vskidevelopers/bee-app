@@ -95,9 +95,12 @@ export default function HomePage() {
             </a>
           </p>
 
-          {/* TikTok Feed */}
+          {/* TikTok Feed with fallback */}
           <div className="mb-8">
-            <TikTokFeed />
+            <TikTokFeed
+              onLoaded={() => console.info('[TikTokFeed] Loaded successfully')}
+              onError={() => console.warn('[TikTokFeed] Failed to load')}
+            />
           </div>
 
           {/* Follow Button */}

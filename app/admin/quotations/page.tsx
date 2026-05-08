@@ -1,4 +1,4 @@
-import { getAllQuotations, updateQuotationStatus } from '@/lib/actions/quotations';
+import { getAllQuotations, } from '@/lib/actions/quotations';
 import { Quotation } from '@/types';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
